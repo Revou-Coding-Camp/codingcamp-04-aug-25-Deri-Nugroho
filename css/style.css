@@ -9,6 +9,7 @@ body {
 .container {
     max-width: 1000px;
     margin: auto;
+    text-align: center; /* ini bikin teks di dalamnya center */
 }
 
 /* Stats */
