@@ -171,3 +171,23 @@ body {
 .action-edit { background: #ffc107; }
 .action-complete { background: #28a745; }
 .action-delete { background: #ff4d4d; }
+
+/* Tambahan untuk dropdown & category */
+select, input[type="text"], input[type="date"] {
+    border-radius: 6px;
+    border: 1px solid #8000ff;
+    background: #12192e;
+    color: white;
+    padding: 10px;
+}
+
+/* Priority color */
+.priority-low { color: #2ef7b9; font-weight: bold; }
+.priority-medium { color: #ffc107; font-weight: bold; }
+.priority-high { color: #ff4d4d; font-weight: bold; }
+
+/* Drag over highlight */
+.drag-over {
+    outline: 2px dashed #8000ff;
+    background-color: rgba(128, 0, 255, 0.1);
+}

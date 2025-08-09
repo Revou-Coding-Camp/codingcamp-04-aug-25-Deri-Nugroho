@@ -3,69 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Todo List</title>
+    <title>To-Do List</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container">
+<div class="container">
+    <h1>TO-DO List</h1>
 
-        <!-- Stats -->
-        <div class="stats">
-            <div class="stat-box">
-                <span class="stat-value" id="total-tasks">0</span>
-                <span class="stat-label">Total Tasks</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-value completed" id="completed-tasks">0</span>
-                <span class="stat-label">Completed</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-value pending" id="pending-tasks">0</span>
-                <span class="stat-label">Pending</span>
-            </div>
-            <div class="stat-box">
-                <span class="stat-value progress" id="progress">0%</span>
-                <span class="stat-label">Progress</span>
-            </div>
+    <!-- Statistik -->
+    <div class="stats">
+        <div class="stat-box">
+            <span class="stat-value" id="total-tasks">0</span>
+            <span class="stat-label">Total</span>
         </div>
-
-        <!-- Progress bar -->
-        <div class="progress-bar-container">
-            <div id="progress-bar" class="progress-bar"></div>
+        <div class="stat-box">
+            <span class="stat-value completed" id="completed-tasks">0</span>
+            <span class="stat-label">Completed</span>
         </div>
-
-        <!-- Form -->
-        <div class="form-row">
-            <input type="text" id="todo-input" placeholder="Add a todo . . ." required>
-            <input type="date" id="due-date" required>
-            <button id="add-btn" class="btn-add">+</button>
+        <div class="stat-box">
+            <span class="stat-value pending" id="pending-tasks">0</span>
+            <span class="stat-label">Pending</span>
         </div>
-
-        <!-- Search & Filter -->
-        <div class="search-filter-row">
-            <input type="text" id="search-input" placeholder="Search tasks... (Ctrl+F)">
-            <button id="filter-btn" class="btn-filter">Filter</button>
-            <button id="delete-all" class="btn-delete">Delete All</button>
+        <div class="stat-box">
+            <span class="stat-value progress" id="progress">0%</span>
+            <span class="stat-label">Progress</span>
         </div>
-
-        <!-- Table -->
-        <table class="todo-table">
-            <thead>
-                <tr>
-                    <th>Task</th>
-                    <th>Due Date</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="todo-list">
-                <tr>
-                    <td colspan="4" class="no-task">No task found</td>
-                </tr>
-            </tbody>
-        </table>
-
     </div>
-    <script src="js/script.js"></script>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+
+    <!-- Form Tambah Tugas -->
+    <div class="form-row">
+        <input type="text" id="todo-input" placeholder="Add new task">
+        <input type="date" id="due-date">
+        <select id="priority">
+            <option value="Low">Low</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="High">High</option>
+        </select>
+        <input type="text" id="category" placeholder="Category">
+        <button class="btn-add" id="add-btn">+</button>
+    </div>
+
+    <!-- Search & Filter -->
+    <div class="search-filter-row">
+        <input type="text" id="search-input" placeholder="Search tasks">
+        <select id="filter-status">
+            <option value="all">All Tasks</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+        </select>
+        <select id="sort-by">
+            <option value="date">Sort by Date</option>
+            <option value="priority">Sort by Priority</option>
+        </select>
+        <button class="btn-delete" id="delete-all">Delete All</button>
+    </div>
+
+    <!-- Table -->
+    <table class="todo-table">
+        <thead>
+            <tr>
+                <th>Task</th>
+                <th>Due Date</th>
+                <th>Priority</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="todo-list"></tbody>
+    </table>
+</div>
+
+<script src="js/script.js"></script>
 </body>
 </html>
