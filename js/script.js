@@ -1,89 +1,99 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('todo-form');
-    const todoInput = document.getElementById('todo-input');
-    const dueDate = document.getElementById('due-date');
-    const todoList = document.getElementById('todo-list'); // tbody
-    const deleteAllButton = document.getElementById('delete-all');
+document.addEventListener("DOMContentLoaded", () => {
+    const todoInput = document.getElementById("todo-input");
+    const dueDate = document.getElementById("due-date");
+    const addBtn = document.getElementById("add-btn");
+    const todoList = document.getElementById("todo-list");
+    const deleteAllBtn = document.getElementById("delete-all");
+    const searchInput = document.getElementById("search-input");
+
+    const totalTasksEl = document.getElementById("total-tasks");
+    const completedTasksEl = document.getElementById("completed-tasks");
+    const pendingTasksEl = document.getElementById("pending-tasks");
+    const progressEl = document.getElementById("progress");
+    const progressBar = document.getElementById("progress-bar");
 
     let tasks = [];
 
-    // Tambah task
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        addTask(todoInput.value, dueDate.value);
-        form.reset();
+    function updateStats() {
+        const total = tasks.length;
+        const completed = tasks.filter(t => t.completed).length;
+        const pending = total - completed;
+        const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+        totalTasksEl.textContent = total;
+        completedTasksEl.textContent = completed;
+        pendingTasksEl.textContent = pending;
+        progressEl.textContent = `${progress}%`;
+        progressBar.style.width = `${progress}%`;
+    }
+
+    function renderTasks(filterText = "") {
+        todoList.innerHTML = "";
+
+        if (tasks.length === 0) {
+            todoList.innerHTML = `<tr><td colspan="4" class="no-task">No task found</td></tr>`;
+            return;
+        }
+
+        tasks
+            .filter(task => task.task.toLowerCase().includes(filterText.toLowerCase()))
+            .forEach((taskObj, index) => {
+                const tr = document.createElement("tr");
+
+                tr.innerHTML = `
+                    <td style="${taskObj.completed ? 'text-decoration: line-through; opacity:0.6;' : ''}">${taskObj.task}</td>
+                    <td>${taskObj.date}</td>
+                    <td><span class="status-label ${taskObj.completed ? 'status-completed' : 'status-pending'}">${taskObj.completed ? 'Completed' : 'Pending'}</span></td>
+                    <td>
+                        <button class="action-btn action-edit" onclick="editTask(${index})">✏</button>
+                        <button class="action-btn action-complete" onclick="toggleComplete(${index})">✔</button>
+                        <button class="action-btn action-delete" onclick="deleteTask(${index})">🗑</button>
+                    </td>
+                `;
+                todoList.appendChild(tr);
+            });
+
+        updateStats();
+    }
+
+    addBtn.addEventListener("click", () => {
+        const taskText = todoInput.value.trim();
+        const dateValue = dueDate.value;
+
+        if (!taskText || !dateValue) return alert("Please fill all fields");
+
+        tasks.push({ task: taskText, date: dateValue, completed: false });
+        todoInput.value = "";
+        dueDate.value = "";
+        renderTasks();
     });
 
-    // Hapus semua
-    deleteAllButton.addEventListener('click', () => {
+    deleteAllBtn.addEventListener("click", () => {
         tasks = [];
         renderTasks();
     });
 
-    // Fungsi tambah task
-    function addTask(task, date) {
-        if (task.trim() === '' || date.trim() === '') return;
+    searchInput.addEventListener("input", () => {
+        renderTasks(searchInput.value);
+    });
 
-        const newTask = { task, date, completed: false };
-        tasks.push(newTask);
-        renderTasks();
-    }
-
-    // Render ke tabel
-    function renderTasks(filter = 'all') {
-        todoList.innerHTML = '';
-
-        if (tasks.length === 0) {
-            todoList.innerHTML = `
-                <tr>
-                    <td colspan="4" class="no-task">No task found</td>
-                </tr>
-            `;
-            return;
-        }
-
-        tasks.forEach((taskObj, index) => {
-            if (filter === 'completed' && !taskObj.completed) return;
-            if (filter === 'pending' && taskObj.completed) return;
-
-            const tr = document.createElement('tr');
-
-            tr.innerHTML = `
-                <td>${taskObj.task}</td>
-                <td>${taskObj.date}</td>
-                <td style="color:${taskObj.completed ? '#5dff8f' : '#ff7b7b'}">
-                    ${taskObj.completed ? 'Completed' : 'Pending'}
-                </td>
-                <td>
-                    <button class="btn-action complete" onclick="toggleComplete(${index})">
-                        ${taskObj.completed ? 'Undo' : 'Complete'}
-                    </button>
-                    <button class="btn-action delete" onclick="deleteTask(${index})">
-                        Delete
-                    </button>
-                </td>
-            `;
-            todoList.appendChild(tr);
-        });
-    }
-
-    // Toggle selesai
-    window.toggleComplete = function (index) {
+    window.toggleComplete = (index) => {
         tasks[index].completed = !tasks[index].completed;
-        renderTasks();
+        renderTasks(searchInput.value);
     };
 
-    // Hapus task
-    window.deleteTask = function (index) {
+    window.deleteTask = (index) => {
         tasks.splice(index, 1);
-        renderTasks();
+        renderTasks(searchInput.value);
     };
 
-    // Filter
-    document.getElementById('filter-all').addEventListener('click', () => renderTasks('all'));
-    document.getElementById('filter-pending').addEventListener('click', () => renderTasks('pending'));
-    document.getElementById('filter-completed').addEventListener('click', () => renderTasks('completed'));
+    window.editTask = (index) => {
+        const newTask = prompt("Edit task:", tasks[index].task);
+        if (newTask !== null) {
+            tasks[index].task = newTask.trim();
+            renderTasks(searchInput.value);
+        }
+    };
 
-    // Render awal
     renderTasks();
 });

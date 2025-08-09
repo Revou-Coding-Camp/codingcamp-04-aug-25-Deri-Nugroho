@@ -3,23 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
     <title>Todo List</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Todo List</h1>
 
-        <!-- Form Input -->
-        <form id="todo-form" class="todo-form">
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-box">
+                <span class="stat-value" id="total-tasks">0</span>
+                <span class="stat-label">Total Tasks</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-value completed" id="completed-tasks">0</span>
+                <span class="stat-label">Completed</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-value pending" id="pending-tasks">0</span>
+                <span class="stat-label">Pending</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-value progress" id="progress">0%</span>
+                <span class="stat-label">Progress</span>
+            </div>
+        </div>
+
+        <!-- Progress bar -->
+        <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <!-- Form -->
+        <div class="form-row">
             <input type="text" id="todo-input" placeholder="Add a todo . . ." required>
             <input type="date" id="due-date" required>
-            <button type="submit" class="btn-add">+</button>
-        </form>
+            <button id="add-btn" class="btn-add">+</button>
+        </div>
 
-        <!-- Filter -->
-        <div class="filter-container">
-            <button id="filter-all" class="btn-filter">Filter</button>
+        <!-- Search & Filter -->
+        <div class="search-filter-row">
+            <input type="text" id="search-input" placeholder="Search tasks... (Ctrl+F)">
+            <button id="filter-btn" class="btn-filter">Filter</button>
             <button id="delete-all" class="btn-delete">Delete All</button>
         </div>
 
@@ -39,8 +64,8 @@
                 </tr>
             </tbody>
         </table>
-    </div>
 
+    </div>
     <script src="js/script.js"></script>
 </body>
 </html>
