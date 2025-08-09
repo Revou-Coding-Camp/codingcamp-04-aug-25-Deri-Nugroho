@@ -4,30 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
-    <title>To-Do List</title>
+    <title>Todo List</title>
 </head>
 <body>
     <div class="container">
-        <h1>TO-DOIT Made with ❤️ by Abdellatif Laghjaj</h1>
-        <div class="stats">
-            <p>Total Tasks: <span id="total-tasks">0</span></p>
-            <p>Completed: <span id="completed-tasks">0</span></p>
-            <p>Pending: <span id="pending-tasks">0</span></p>
-            <p>Progress: <span id="progress">0%</span></p>
-        </div>
-        <form id="todo-form">
-            <input type="text" id="todo-input" placeholder="Add new task" required>
+        <h1>Todo List</h1>
+
+        <!-- Form Input -->
+        <form id="todo-form" class="todo-form">
+            <input type="text" id="todo-input" placeholder="Add a todo . . ." required>
             <input type="date" id="due-date" required>
-            <button type="submit">Add Task</button>
+            <button type="submit" class="btn-add">+</button>
         </form>
-        <div class="filter">
-            <button id="filter-all">All Tasks</button>
-            <button id="filter-pending">Pending</button>
-            <button id="filter-completed">Completed</button>
+
+        <!-- Filter -->
+        <div class="filter-container">
+            <button id="filter-all" class="btn-filter">Filter</button>
+            <button id="delete-all" class="btn-delete">Delete All</button>
         </div>
-        <ul id="todo-list"></ul>
-        <button id="delete-all">Delete All Tasks</button>
+
+        <!-- Table -->
+        <table class="todo-table">
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Due Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="todo-list">
+                <tr>
+                    <td colspan="4" class="no-task">No task found</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+
     <script src="js/script.js"></script>
 </body>
 </html>
